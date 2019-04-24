@@ -115,7 +115,7 @@ class SingleNodeTest extends TestBase {
     void badRequest() {
         assertTimeoutPreemptively(TIMEOUT, () -> assertEquals(
                 400,
-                client.get("/abracadabra").getStatus()));
+                client.get("/v0/entity?notid=1").getStatus()));
     }
 
     @Test
@@ -165,7 +165,8 @@ class SingleNodeTest extends TestBase {
     }
 
     @Test
-    void lifecycle2keys() {
+    void
+    lifecycle2keys() {
         assertTimeoutPreemptively(TIMEOUT, () -> {
             final String key1 = randomId();
             final byte[] value1 = randomValue();
