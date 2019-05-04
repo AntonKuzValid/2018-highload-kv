@@ -4,7 +4,15 @@
 plugins {
     java
     application
+    idea
 }
+
+/*idea {
+    module{
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
+}*/
 
 repositories {
     jcenter()
@@ -12,7 +20,7 @@ repositories {
 
 dependencies {
     // Our beloved one-nio
-    compile("ru.odnoklassniki:one-nio:1.0.2")
+    compile("ru.odnoklassniki:one-nio:1.1.0")
 
     // Annotations for better code documentation
     compile("com.intellij:annotations:12.0")

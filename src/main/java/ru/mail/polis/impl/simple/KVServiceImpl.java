@@ -61,11 +61,9 @@ public class KVServiceImpl implements KVService {
         this.httpServer = HttpServer.create(new InetSocketAddress(port), 0);
         this.dao = dao;
 
-        this.httpServer.createContext("/*", http -> handleRequest(400, http));
-
         this.httpServer.createContext("/v0/status",
                 http -> {
-                    String response = "hello";
+                    String response = "OK";
                     handleRequestAndClose(200, response.getBytes(Charset.forName("UTF-8")), http);
                 });
 
@@ -83,7 +81,7 @@ public class KVServiceImpl implements KVService {
                 case "PUT":
                     List<String> headers = http.getRequestHeaders().get("Content-Length");
                     if (headers != null && !headers.isEmpty()) {
-                        Integer contentLength = Integer.valueOf(headers.get(0));
+                        int contentLength = Integer.parseInt(headers.get(0));
                         final byte[] request = new byte[contentLength];
                         if (contentLength != 0 && http.getRequestBody().read(request) != contentLength) {
                             throw new IOException();
@@ -124,7 +122,6 @@ public class KVServiceImpl implements KVService {
             } catch (IllegalArgumentException ex) {
                 handleRequestAndClose(400, exchange);
             } catch (Exception ex) {
-
                 handleRequestAndClose(500, exchange);
                 ex.printStackTrace();
             }
